@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Complexity Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        .password-checker {
+            max-width: 400px;
+            margin: auto;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        .feedback {
+            font-weight: bold;
+        }
+        .strong {
+            color: green;
+        }
+        .moderate {
+            color: orange;
+        }
+        .weak {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="password-checker">
+        <h2>Password Complexity Checker</h2>
+        <input type="password" id="password" placeholder="Enter password" oninput="checkPassword()">
+        <p class="feedback" id="feedback"></p>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const feedback = document.getElementById('feedback');
+
+            // Define criteria
+            const lengthCriteria = password.length >= 8;
+            const uppercaseCriteria = /[A-Z]/.test(password);
+            const lowercaseCriteria = /[a-z]/.test(password);
+            const numberCriteria = /[0-9]/.test(password);
+            const specialCriteria = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+            // Calculate score
+            let strengthScore = 0;
+            if (lengthCriteria) strengthScore++;
+            if (uppercaseCriteria) strengthScore++;
+            if (lowercaseCriteria) strengthScore++;
+            if (numberCriteria) strengthScore++;
+            if (specialCriteria) strengthScore++;
+
+            // Provide feedback
+            if (strengthScore === 5) {
+                feedback.textContent = "Strong password";
+                feedback.className = "feedback strong";
+            } else if (strengthScore >= 3) {
+                feedback.textContent = "Moderate password";
+                feedback.className = "feedback moderate";
+            } else {
+                feedback.textContent = "Weak password";
+                feedback.className = "feedback weak";
+            }
+        }
+    </script>
+</body>
+</html>/
